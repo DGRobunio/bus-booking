@@ -26,9 +26,22 @@ func OneBus(c *gin.Context) {
 	if err != nil {
 		util.BadRequest(c)
 	} else {
-		c.JSON(http.StatusOK, gin.H{
-			"code": http.StatusOK,
-			"bus":  bus,
-		})
+		session, _ := c.Cookie("session")
+		if session != "" {
+			var user models.User
+			err := models.NowUser(&user, &session)
+			util.Report(err)
+			favorited := models.Favorited(&user.UserID, &bus.BusID)
+			c.JSON(http.StatusOK, gin.H{
+				"code":      http.StatusOK,
+				"bus":       bus,
+				"favorited": favorited,
+			})
+		} else {
+			c.JSON(http.StatusOK, gin.H{
+				"code": http.StatusOK,
+				"bus":  bus,
+			})
+		}
 	}
 }
