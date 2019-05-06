@@ -11,7 +11,7 @@ package util
 //		DB:       0,
 //	}
 //
-//  dbConf = "root:password@/dbName"
+//	dbConf = "root:password@/dbName"
 //
 //	Port = ":8080"
 //
