@@ -13,5 +13,7 @@ func Route() *gin.Engine {
 	router.GET("/user", controllers.NowUser)
 	router.POST("/user", controllers.SignUp)
 	router.PUT("/user", controllers.UpdateUser)
+	router.GET("/bus", controllers.AllBuses)
+	router.GET("/bus/:busID", controllers.OneBus)
 	return router
 }
