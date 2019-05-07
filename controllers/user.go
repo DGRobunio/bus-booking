@@ -13,17 +13,17 @@ func NowUser(c *gin.Context) {
 	err := models.NowUser(&user, &session)
 	if err != nil {
 		util.BadRequest(c)
-	} else {
-		c.JSON(http.StatusOK, gin.H{
-			"code": http.StatusOK,
-			"user": gin.H{
-				"userId":  user.UserID,
-				"account": user.Account,
-				"balance": user.Balance,
-				"isAdmin": user.IsAdmin,
-			},
-		})
+		return
 	}
+	c.JSON(http.StatusOK, gin.H{
+		"code": http.StatusOK,
+		"user": gin.H{
+			"userId":  user.UserID,
+			"account": user.Account,
+			"balance": user.Balance,
+			"isAdmin": user.IsAdmin,
+		},
+	})
 }
 
 func Login(c *gin.Context) {
@@ -33,17 +33,21 @@ func Login(c *gin.Context) {
 	session, err := models.Login(&user)
 	if err != nil {
 		util.BadRequest(c)
-	} else {
-		c.SetCookie("session", session, 3600, "/", util.Domain, false, false)
-		c.JSON(http.StatusOK, gin.H{
-			"code":    http.StatusOK,
-			"session": session,
-		})
+		return
 	}
+	c.SetCookie("session", session, 3600, "/", util.Domain, false, false)
+	c.JSON(http.StatusOK, gin.H{
+		"code":    http.StatusOK,
+		"session": session,
+	})
 }
 
 func Logout(c *gin.Context) {
-	session, _ := c.Cookie("session")
+	session, err := c.Cookie("session")
+	if err != nil {
+		util.Unauthorized(c)
+		return
+	}
 	models.Logout(&session)
 	c.SetCookie("session", session, -1, "/", util.Domain, false, false)
 	c.JSON(http.StatusOK, gin.H{"code": http.StatusOK})
@@ -56,20 +60,24 @@ func SignUp(c *gin.Context) {
 	err := models.SignUp(&user)
 	if err != nil {
 		util.BadRequest(c)
-	} else {
-		c.JSON(http.StatusOK, gin.H{"code": http.StatusOK})
+		return
 	}
+	c.JSON(http.StatusOK, gin.H{"code": http.StatusOK})
 }
 
 func UpdateUser(c *gin.Context) {
-	session, _ := c.Cookie("session")
+	session, err := c.Cookie("session")
+	if err != nil {
+		util.Unauthorized(c)
+		return
+	}
 	oldPassword := c.PostForm("oldPassword")
 	newPassword := c.PostForm("newPassword")
 	user := models.User{Password: oldPassword}
-	err := models.UpdateUser(&user, &session, &newPassword)
+	err = models.UpdateUser(&user, &session, &newPassword)
 	if err != nil {
 		util.BadRequest(c)
-	} else {
-		c.JSON(http.StatusOK, gin.H{"code": http.StatusOK})
+		return
 	}
+	c.JSON(http.StatusOK, gin.H{"code": http.StatusOK})
 }

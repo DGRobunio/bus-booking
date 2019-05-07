@@ -51,3 +51,7 @@ func Report(err error) {
 func BadRequest(c *gin.Context) {
 	c.JSON(http.StatusBadRequest, gin.H{"code": http.StatusBadRequest})
 }
+
+func Unauthorized(c *gin.Context) {
+	c.JSON(http.StatusUnauthorized, gin.H{"code": http.StatusUnauthorized})
+}

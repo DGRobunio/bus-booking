@@ -12,12 +12,12 @@ func AllBuses(c *gin.Context) {
 	err := models.AllBuses(&buses)
 	if err != nil {
 		util.BadRequest(c)
-	} else {
-		c.JSON(http.StatusOK, gin.H{
-			"code": http.StatusOK,
-			"bus":  buses,
-		})
+		return
 	}
+	c.JSON(http.StatusOK, gin.H{
+		"code": http.StatusOK,
+		"bus":  buses,
+	})
 }
 
 func OneBus(c *gin.Context) {
@@ -25,23 +25,23 @@ func OneBus(c *gin.Context) {
 	err := models.OneBus(&bus)
 	if err != nil {
 		util.BadRequest(c)
+		return
+	}
+	session, _ := c.Cookie("session")
+	if session != "" {
+		var user models.User
+		err := models.NowUser(&user, &session)
+		util.Report(err)
+		favorited := models.Favorited(&user.UserID, &bus.BusID)
+		c.JSON(http.StatusOK, gin.H{
+			"code":      http.StatusOK,
+			"bus":       bus,
+			"favorited": favorited,
+		})
 	} else {
-		session, _ := c.Cookie("session")
-		if session != "" {
-			var user models.User
-			err := models.NowUser(&user, &session)
-			util.Report(err)
-			favorited := models.Favorited(&user.UserID, &bus.BusID)
-			c.JSON(http.StatusOK, gin.H{
-				"code":      http.StatusOK,
-				"bus":       bus,
-				"favorited": favorited,
-			})
-		} else {
-			c.JSON(http.StatusOK, gin.H{
-				"code": http.StatusOK,
-				"bus":  bus,
-			})
-		}
+		c.JSON(http.StatusOK, gin.H{
+			"code": http.StatusOK,
+			"bus":  bus,
+		})
 	}
 }

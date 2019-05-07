@@ -42,10 +42,9 @@ func OneBus(b *Bus) error {
 	util.Report(err)
 	if !rows.Next() {
 		return errors.New("bus: error")
-	} else {
-		err := rows.Scan(&b.BusID, &b.License, &b.TotalSeats, &b.EmptySeats, &b.Departure, &b.Destination, &b.BeginAt,
-			&b.EndAt, &b.Price, &b.Info, &b.Weekly, &b.Status)
-		util.Report(err)
-		return nil
 	}
+	err = rows.Scan(&b.BusID, &b.License, &b.TotalSeats, &b.EmptySeats, &b.Departure, &b.Destination, &b.BeginAt,
+		&b.EndAt, &b.Price, &b.Info, &b.Weekly, &b.Status)
+	util.Report(err)
+	return nil
 }
