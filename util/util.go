@@ -12,6 +12,7 @@ import (
 var (
 	Redis *redis.Client
 	DB    *sql.DB
+	Order chan bool
 )
 
 func Init() {
