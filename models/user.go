@@ -5,6 +5,7 @@ import (
 	"crypto/sha1"
 	"encoding/hex"
 	"errors"
+	"log"
 	"math/rand"
 	"strconv"
 )
@@ -46,21 +47,13 @@ func Login(u *User) (string, error) {
 		*session = string(b)
 		c <- true
 	}(&session, c)
-	go checkPassword(u, c)
+	go checkUserPassword(u, c)
 	for i := 0; i < cap(c); i++ {
 		if !<-c {
 			return "", errors.New("login: error")
 		}
 	}
-	go func() {
-		_, err := util.Redis.HMSet("session:"+session, map[string]interface{}{
-			"userId":  u.UserID,
-			"account": u.Account,
-			"balance": u.Balance,
-			"isAdmin": u.IsAdmin,
-		}).Result()
-		util.Report(err)
-	}()
+	go updateUserCache(u, &session)
 	return session, nil
 }
 
@@ -82,7 +75,7 @@ func SignUp(u *User) error {
 		*salt = string(b)
 		c <- false
 	}(&salt, c)
-	go checkExists(u, c)
+	go checkUserExists(u, c)
 	for i := 0; i < cap(c); i++ {
 		if <-c {
 			return errors.New("sign up: error")
@@ -105,8 +98,8 @@ func UpdateUser(u *User, session *string, newPassword *string) error {
 		return errors.New("update user: error")
 	}
 	c := make(chan bool, 2)
-	go checkExists(u, c)
-	go checkPassword(u, c)
+	go checkUserExists(u, c)
+	go checkUserPassword(u, c)
 	for i := 0; i < cap(c); i++ {
 		if !<-c {
 			return errors.New("update user: error")
@@ -129,19 +122,28 @@ func UpdateUser(u *User, session *string, newPassword *string) error {
 	return nil
 }
 
-func checkExists(u *User, c chan bool) {
+func check(u *User) bool {
 	if u.Account == "" {
-		c <- false
-	} else {
-		stmt, err := util.DB.Prepare("SELECT * FROM users WHERE account = ?")
-		util.Report(err)
-		rows, err := stmt.Query(u.Account)
-		util.Report(err)
-		c <- rows.Next()
+		return false
 	}
+	stmt, err := util.DB.Prepare("SELECT * FROM users WHERE account = ?")
+	util.Report(err)
+	rows, err := stmt.Query(u.Account)
+	util.Report(err)
+	b := rows.Next()
+	var user User
+	err = rows.Scan(&user.UserID, &user.Account, &user.Password, &user.Salt, &user.Balance,
+		&user.IsAdmin)
+	util.Report(err)
+	*u = user
+	return b
 }
 
-func checkPassword(u *User, c chan bool) {
+func checkUserExists(u *User, c chan bool) {
+	c <- check(u)
+}
+
+func checkUserPassword(u *User, c chan bool) {
 	if u.Account == "" || u.Password == "" {
 		c <- false
 	} else {
@@ -151,7 +153,8 @@ func checkPassword(u *User, c chan bool) {
 		rows, err := stmt.Query(u.Account)
 		util.Report(err)
 		for rows.Next() {
-			err := rows.Scan(&user.UserID, &user.Account, &user.Password, &user.Salt, &user.Balance, &user.IsAdmin)
+			err := rows.Scan(&user.UserID, &user.Account, &user.Password, &user.Salt, &user.Balance,
+				&user.IsAdmin)
 			util.Report(err)
 		}
 		password := sha1.New()
@@ -163,4 +166,15 @@ func checkPassword(u *User, c chan bool) {
 			c <- false
 		}
 	}
+}
+
+func updateUserCache(u *User, session *string) {
+	log.Print(u)
+	_, err := util.Redis.HMSet("session:"+*session, map[string]interface{}{
+		"userId":  u.UserID,
+		"account": u.Account,
+		"balance": u.Balance,
+		"isAdmin": u.IsAdmin,
+	}).Result()
+	util.Report(err)
 }

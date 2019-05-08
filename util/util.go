@@ -18,6 +18,7 @@ var (
 func Init() {
 	RedisConn()
 	DBConn()
+	Order = make(chan bool, 1)
 }
 
 func RedisConn() {

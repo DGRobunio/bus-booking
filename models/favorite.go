@@ -17,8 +17,8 @@ func AllFavorites(session *string, b *[]Bus) error {
 	rows, err := stmt.Query(user.UserID)
 	util.Report(err)
 	for rows.Next() {
-		err := rows.Scan(&bus.BusID, &bus.License, &bus.TotalSeats, &bus.EmptySeats, &bus.Departure, &bus.Destination,
-			&bus.BeginAt, &bus.EndAt, &bus.Price, &bus.Info, &bus.Weekly, &bus.Status)
+		err := rows.Scan(&bus.BusID, &bus.License, &bus.TotalSeats, &bus.EmptySeats, &bus.Departure,
+			&bus.Destination, &bus.BeginAt, &bus.EndAt, &bus.Price, &bus.Info, &bus.Weekly, &bus.Status)
 		util.Report(err)
 		*b = append(*b, bus)
 	}

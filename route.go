@@ -17,6 +17,7 @@ func Route() *gin.Engine {
 	router.GET("/bus/:busID", controllers.OneBus)
 	router.GET("/order", controllers.AllOrders)
 	router.GET("/order/:orderID", controllers.OneOrder)
+	router.POST("/order", controllers.Book)
 	router.GET("/favorite", controllers.AllFavorites)
 	router.POST("/favorite", controllers.Favorite)
 	router.DELETE("/favorite", controllers.Unfavorite)
