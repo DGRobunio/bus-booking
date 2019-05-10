@@ -5,7 +5,6 @@ import (
 	"crypto/sha1"
 	"encoding/hex"
 	"errors"
-	"log"
 	"math/rand"
 	"strconv"
 )
@@ -130,13 +129,15 @@ func check(u *User) bool {
 	util.Report(err)
 	rows, err := stmt.Query(u.Account)
 	util.Report(err)
-	b := rows.Next()
+	if  !rows.Next() {
+		return false
+	}
 	var user User
 	err = rows.Scan(&user.UserID, &user.Account, &user.Password, &user.Salt, &user.Balance,
 		&user.IsAdmin)
 	util.Report(err)
 	*u = user
-	return b
+	return true
 }
 
 func checkUserExists(u *User, c chan bool) {
@@ -169,7 +170,6 @@ func checkUserPassword(u *User, c chan bool) {
 }
 
 func updateUserCache(u *User, session *string) {
-	log.Print(u)
 	_, err := util.Redis.HMSet("session:"+*session, map[string]interface{}{
 		"userId":  u.UserID,
 		"account": u.Account,
