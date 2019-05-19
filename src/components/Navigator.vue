@@ -9,12 +9,12 @@
 <!--        <form @submit.prevent="submit" class="form-inline my-2 my-md-0">-->
 <!--          <input v-model="search" class="form-control" type="text" placeholder="Search" aria-label="Search">-->
 <!--        </form>-->
-        <ul v-if="!user.userID" class="navbar-nav ml-auto">
+        <ul v-if="user.userID === ''" class="navbar-nav ml-auto">
           <li class="nav-item mr-auto">
-            <router-link to="/register" class="nav-link">Register</router-link>
+            <router-link to="/register" class="nav-link">注册</router-link>
           </li>
           <li class="nav-item mr-auto">
-            <router-link to="/login" class="nav-link">Login</router-link>
+            <router-link to="/login" class="nav-link">登录</router-link>
           </li>
         </ul>
         <ul v-else class="nav bar-nav ml-auto">
