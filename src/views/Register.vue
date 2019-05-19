@@ -4,7 +4,7 @@
     <div class="register-page">
       <form @submit.prevent="submit" class="register-form">
         <img class="mb-4" src="../assets/logo.png" alt="" width="72" height="72">
-        <h1 class="h3 mb-3 font-weight-normal">Please Input your information.</h1>
+        <h1 class="h3 mb-3 font-weight-normal">注册信息</h1>
         <label for="account" class="sr-only">用户名</label>
         <input v-model="register.account" type="text" id="account" class="form-control" placeholder="手机号" required autofocus>
         <label for="password" class="sr-only">密码</label>

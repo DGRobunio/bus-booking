@@ -13,11 +13,13 @@ import 'bootstrap/dist/css/bootstrap.css'
 
 global.jquery = jquery
 global.$ = axios
-global.address = 'https://yapi.airstone.me/mock/11'
-global.api = global.address + '/api/'
+global.api = 'https://yapi.airstone.me/mock/11' + '/api/'
 global.md5 = md5
 global.QRCode = QRCode
 
+console.log(md5 ('hlynbnb'))
+
+axios.defaults.headers.post['Content-Type'] = ''
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

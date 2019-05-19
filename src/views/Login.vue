@@ -11,7 +11,7 @@
         <input v-model="login.password" type="password" id="user_password" class="form-control" placeholder="密码" required>
         <div v-if="tip.status === 'success'" class="alert alert-success">{{tip.message}}</div>
         <div v-if="tip.status === 'fail'" class="alert alert-danger">{{tip.message}}</div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
       </form>
     </div>
     <Foot />

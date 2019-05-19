@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row">
         <div class="col">
-          <div class="alert alert-danger" v-if="Object.keys(bus).length === 0 || bus.oneBus.busID === null">当前没有班车，如果信息有误请联系管理员。</div>
+          <div class="alert alert-danger" v-if="Object.keys(bus).length === 0">当前没有班车，如果信息有误请联系管理员。</div>
           <div v-else>
             <table class="table">
               <thead>
