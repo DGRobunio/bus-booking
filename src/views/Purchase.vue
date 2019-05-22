@@ -82,20 +82,6 @@
     },
     data () {
       return {
-        bus: {
-          busID: null,
-          license: null,
-          totalSeats: null,
-          emptySeats: null,
-          departure: null,
-          destination: null,
-          beginAt: null,
-          endAt: null,
-          price: null,
-          info: null,
-          weekly: null,
-          status: null
-        },
         tip: {
           status: null,
           message: null
@@ -127,6 +113,14 @@
           }
         })
       }
+    },
+    beforeMount () {
+      const self = this
+      $.get(api + 'bus/' + self.$route.params.busID).then(function (response) {
+        if(response.data.code === 200) {
+          self.bus = response.data.bus
+        }
+      })
     }
   }
 </script>

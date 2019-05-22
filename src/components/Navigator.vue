@@ -6,9 +6,6 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarCollapse">
-<!--        <form @submit.prevent="submit" class="form-inline my-2 my-md-0">-->
-<!--          <input v-model="search" class="form-control" type="text" placeholder="Search" aria-label="Search">-->
-<!--        </form>-->
         <ul v-if="user.userID === ''" class="navbar-nav ml-auto">
           <li class="nav-item mr-auto">
             <router-link to="/register" class="nav-link">注册</router-link>
@@ -19,7 +16,7 @@
         </ul>
         <ul v-else class="nav bar-nav ml-auto">
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Welcome, {{user.userID}}! </a>
+            <a class="nav-link text-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Welcome, {{user.userID}}! </a>
             <div class="dropdown-menu" aria-labelledby="dropdown">
               <router-link to="/user" class="dropdown-item">余额：{{user.balance}}元</router-link>
               <router-link to="/orders" class="dropdown-item">我的订单</router-link>
