@@ -10,6 +10,7 @@ import QRCode from 'qrcodejs2'
 import 'bootstrap'
 import 'popper.js'
 import 'bootstrap/dist/css/bootstrap.css'
+import qs from 'qs'
 
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 
@@ -19,6 +20,7 @@ global.api = 'https://yapi.airstone.me/mock/11' + '/api/'
 // global.api = 'http://localhost:8080/'
 global.md5 = md5
 global.QRCode = QRCode
+global.qs = qs
 
 
 Vue.config.productionTip = false
