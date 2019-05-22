@@ -24,7 +24,7 @@
             </div>
           </li>
           <li class="nav-item">
-            <button v-on:click="logout" class=" btn btn-dark">Logout</button>
+            <button v-on:click="logout" class=" btn btn-dark">登出</button>
           </li>
         </ul>
       </div>
