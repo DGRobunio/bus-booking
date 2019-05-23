@@ -92,13 +92,13 @@
       confirmOnClick () {
         const self = this
         $.post(api + 'order', self.$route.params.busID).then(function (response) {
-          if(response.data.code === 200) {
+          if(response.status === 200) {
             self.tip.status = 'success'
             self.tip.message = '购票成功！正在转跳至订单列表...'
             setTimeout(() => {
               self.$router.push('/orders')
             }, 2000)
-          } else if(response.data.code === 400) {
+          } else if(response.status === 400) {
             self.tip.status = 'warning'
             self.tip.message = '所选车辆已无空位，购票失败！'
             setTimeout(() => {
@@ -117,7 +117,7 @@
     beforeMount () {
       const self = this
       $.get(api + 'bus/' + self.$route.params.busID).then(function (response) {
-        if(response.data.code === 200) {
+        if(response.status === 200) {
           self.bus = response.data.bus
         }
       })

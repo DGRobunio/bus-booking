@@ -92,13 +92,13 @@
       deleteFavorite(busID) {
         const self = this
         $.delete(api + 'favorite', busID).then(function (response) {
-          if (response.data.code == 200)
+          if (response.status == 200)
           {
             self.favor = false
           }
         })
         $.get(api + 'favorite').then(function (response) {
-          if (response.data.code === 200) {
+          if (response.status === 200) {
             self.bus = response.data.bus
           }
         })
@@ -107,7 +107,7 @@
     beforeMount () {
       const self = this
       $.get(api + 'favorite').then(function (response) {
-        if (response.data.code === 200) {
+        if (response.status === 200) {
           self.bus = response.data.bus
         }
       })

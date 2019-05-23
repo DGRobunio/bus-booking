@@ -38,7 +38,7 @@
       submit () {
         const self = this
         $.put(api + 'billing', self.key).then(function (response) {
-          if (response.data.code === 200) {
+          if (response.status === 200) {
             if (response.data.user.balance > self.user.balance) {
               self.tip.status = 'success'
               self.tip.message = '充值成功！两秒内刷新页面'

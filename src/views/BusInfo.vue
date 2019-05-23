@@ -103,14 +103,14 @@
         const self = this
         if (self.favor) {
           $.delete(api + 'favorite', self.busID).then(function (response) {
-            if (response.data.code == 200)
+            if (response.status == 200)
             {
               self.favor = false
             }
           })
         } else {
           $.post(api + 'favorite', self.busID).then(function (response) {
-            if (response.data.code == 200)
+            if (response.status == 200)
             {
               self.favor = true
             }
@@ -121,17 +121,17 @@
     beforeMount () {
       const self = this
       $.get(api + 'bus/' + self.busID).then(function (response) {
-        if (response.data.code === 200) {
+        if (response.status === 200) {
           self.bus = response.data.bus
         }
       })
       $.get(api + 'comment/' + self.busID).then(function (response) {
-        if (response.data.code === 200) {
+        if (response.status === 200) {
           self.comment = response.data.comment
         }
       })
       $.get(api + 'favorite').then(function (response) {
-        if (response.data.code === 200) {
+        if (response.status === 200) {
           response.data.bus.forEach((item) => {
             if (item.busID === self.busID) {
               self.favor = true
