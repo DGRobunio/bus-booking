@@ -7,7 +7,8 @@ module.exports = {
   globals: {
     api: true,
     md5: true,
-    QRCode: true
+    QRCode: true,
+    cookie: true
   },
   extends: [
     'plugin:vue/essential',

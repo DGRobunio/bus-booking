@@ -52,10 +52,11 @@ export default {
     logout() {
       $.get(api + 'logout').then(function (response) {
         console.log(response.data.code)
-        // if (response.data.code === 200) {
+        if (response.status === 200) {
+          cookie.deleteCookie('session')
         this.$emit('update')
         this.$router.push('/')
-        // }
+        }
       })
     }
   }
