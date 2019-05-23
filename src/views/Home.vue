@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <Navigator :user="user" />
-    <MainInfo :bus="bus" />
+    <MainInfo :bus="bus" :user="user" />
     <Foot/>
   </div>
 </template>

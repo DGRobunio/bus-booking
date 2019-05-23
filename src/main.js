@@ -22,7 +22,7 @@ global.md5 = md5
 global.QRCode = QRCode
 global.qs = qs
 
-// axios.defaults.withCredentials=true
+axios.defaults.withCredentials=true
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

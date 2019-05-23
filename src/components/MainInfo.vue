@@ -47,6 +47,12 @@
   export default {
     name: 'MainInfo',
     props: {
+      user: {
+        userID: null,
+        account: null,
+        balance: null,
+        isAdmin: null
+      },
       bus: {
         oneBus: {
           busID: null,
