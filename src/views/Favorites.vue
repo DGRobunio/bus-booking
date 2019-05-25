@@ -95,12 +95,11 @@
         $.delete(api + 'favorite?busID=' + busID).then(function (response) {
           if (response.status === 200)
           {
-            self.favor = false
-          }
-        })
-        $.get(api + 'favorite').then(function (response) {
-          if (response.status === 200) {
-            self.bus = response.data.bus
+            $.get(api + 'favorite').then(function (response) {
+              if (response.status === 200) {
+                self.bus = response.data.bus
+              }
+            })
           }
         })
       }

@@ -24,9 +24,10 @@
             <dd class="col-sm-5">{{bus.info}}</dd>
           </dl>
           <hr/>
-          <router-link :to="'/purchase/' + busID" :user="user" class="btn btn-primary">立即订票</router-link>
-          <button v-if="!favor" @click="favoriteChange" class="btn btn-primary"> 收藏</button>
-          <button v-else @click="favoriteChange" class="btn btn-secondary"> 取消收藏</button>
+          <router-link v-if="user.userID === ''" :to="'/login'" class="btn btn-primary">立即订票</router-link>
+          <router-link v-else :to="'/purchase/' + busID" :user="user" class="btn btn-primary">立即订票</router-link>
+          <button v-if="!favor && user.userID !==''" @click="favoriteChange" class="btn btn-primary"> 收藏</button>
+          <button v-else-if="favor && user.userID !==''" @click="favoriteChange" class="btn btn-secondary"> 取消收藏</button>
           <hr/>
           <h5>乘客评价</h5>
           <div class="alert alert-light" v-if="!commentFlag">暂无评价。</div>
@@ -66,7 +67,12 @@
       Foot
     },
     props: {
-      user: null,
+      user: {
+        userID: null,
+        account: null,
+        balance: null,
+        isAdmin: null
+      }
     },
     data () {
       return {

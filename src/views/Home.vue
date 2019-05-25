@@ -58,6 +58,7 @@ export default {
   },
   beforeMount () {
     const self = this
+    self.$emit('update')
     $.get(api + 'bus').then(function (response) {
       if (response.data.code === 200) {
         self.bus = response.data.bus

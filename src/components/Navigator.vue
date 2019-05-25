@@ -24,7 +24,7 @@
             </div>
           </li>
           <li class="nav-item">
-            <button @click="logout" class=" btn btn-dark">Logout</button>
+            <router-link to="/logout" class=" btn btn-dark">登出</router-link>
           </li>
         </ul>
       </div>
@@ -50,13 +50,7 @@ export default {
   },
   methods: {
     logout() {
-      $.get(api + 'logout').then(function (response) {
-        console.log(response.data.code)
-        if (response.status === 200) {
-          this.$emit('update')
-          this.$router.push('/')
-        }
-      })
+
     }
   }
 }

@@ -9,20 +9,33 @@ export default {
   name: 'App',
   data () {
     return {
-      user: null
+      user: {
+        userID: null,
+        account: null,
+        balance: null,
+        isAdmin: null
+      }
     }
   },
   beforeMount () {
     const self = this
     $.get(api).then(function (response) {
-      self.user = response.data.user
+      if(response.status === 200) {
+        self.user = response.data.user
+      } else {
+        self.user.userID = ''
+      }
     })
   },
   methods: {
     update () {
       const self = this
       $.get(api).then(function (response) {
-        self.user = response.data.user
+        if(response.status === 200) {
+          self.user = response.data.user
+        } else {
+          self.user.userID = ''
+        }
       })
     }
   }

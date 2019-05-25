@@ -4,7 +4,7 @@
     <div class="container">
       <div class="row">
         <div v-if="!display.qrCodeFlag" class="col">
-          <div v-if="Object.keys(order).length === 0 " class="alert alert-warning col-sm-12">获取信息失败，请稍后再试。</div>
+          <div v-if="Object.keys(order).length === 0 " class="alert alert-warning col-sm-12">暂无订单。</div>
           <div v-else class="accordion" id="order-list">
             <div class="card">
               <div class="card-header" id="unused">
