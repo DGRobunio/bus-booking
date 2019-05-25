@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <Navigator :user="user" />
-    <MainInfo :bus="bus" :user="user" />
+    <MainInfo :bus="bus" />
     <Foot/>
   </div>
 </template>
@@ -50,7 +50,7 @@ export default {
     reload () {
       const self = this
       $.get(api + 'bus').then(function (response) {
-        if (response.status === 200) {
+        if (response.data.code === 200) {
           self.bus = response.data.bus
         }
       })
@@ -59,7 +59,7 @@ export default {
   beforeMount () {
     const self = this
     $.get(api + 'bus').then(function (response) {
-      if (response.status === 200) {
+      if (response.data.code === 200) {
         self.bus = response.data.bus
       }
     })

@@ -79,7 +79,6 @@
           self.registerInfo.password = md5(self.register.password)
           self.registerInfo.account = self.register.account
           $.post(api + 'user', self.registerInfo).then(function (response) {
-            console.log(response.status)
             if (response.status === 200) {
               self.tip.status = 'success'
               self.tip.message = '注册成功!'

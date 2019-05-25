@@ -10,9 +10,6 @@ import QRCode from 'qrcodejs2'
 import 'bootstrap'
 import 'popper.js'
 import 'bootstrap/dist/css/bootstrap.css'
-import qs from 'qs'
-
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 
 global.jquery = jquery
 global.$ = axios
@@ -20,9 +17,15 @@ global.$ = axios
 global.api = 'http://localhost:8080/'
 global.md5 = md5
 global.QRCode = QRCode
-global.qs = qs
 
+console.log(md5 ('hlynbnb'))
+
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 axios.defaults.withCredentials=true
+
+// axios.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded'
+// axios.defaults.headers.delete['Content-Type'] = 'application/x-www-form-urlencoded'
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

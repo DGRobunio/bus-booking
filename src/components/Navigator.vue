@@ -16,7 +16,7 @@
         </ul>
         <ul v-else class="nav bar-nav ml-auto">
           <li class="nav-item dropdown">
-            <a class="nav-link text-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Welcome, {{user.userID}}! </a>
+            <a class="nav-link text-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Welcome, {{user.account}}! </a>
             <div class="dropdown-menu" aria-labelledby="dropdown">
               <router-link to="/user" class="dropdown-item">余额：{{user.balance}}元</router-link>
               <router-link to="/orders" class="dropdown-item">我的订单</router-link>
@@ -24,7 +24,7 @@
             </div>
           </li>
           <li class="nav-item">
-            <button v-on:click="logout" class=" btn btn-dark">登出</button>
+            <button @click="logout" class=" btn btn-dark">Logout</button>
           </li>
         </ul>
       </div>
@@ -53,9 +53,8 @@ export default {
       $.get(api + 'logout').then(function (response) {
         console.log(response.data.code)
         if (response.status === 200) {
-          cookie.deleteCookie('session')
-        this.$emit('update')
-        this.$router.push('/')
+          this.$emit('update')
+          this.$router.push('/')
         }
       })
     }

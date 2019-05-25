@@ -31,13 +31,17 @@
         tip: {
           status: null,
           message: null
+        },
+        putData: {
+          key: null
         }
       }
     },
     methods: {
       submit () {
         const self = this
-        $.put(api + 'billing', self.key).then(function (response) {
+        self.putData.key = self.key
+        $.put(api + 'billing', self.putData).then(function (response) {
           if (response.status === 200) {
             if (response.data.user.balance > self.user.balance) {
               self.tip.status = 'success'

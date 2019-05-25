@@ -47,7 +47,7 @@
       submit() {
         const self = this
         self.login.password = md5(self.login.password)
-        $.post(api + 'login',  self.login ).then(function (response) {
+        $.post(api + 'login', self.login).then(function (response) {
           if (response.status === 200)
           {
             self.tip.status = 'success'
@@ -124,4 +124,3 @@
     border-bottom-left-radius: 0;
   }
 </style>
-

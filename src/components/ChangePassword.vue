@@ -52,7 +52,7 @@
           self.passwordInfo.oldPassword = md5(self.formInfo.oldPass)
           self.passwordInfo.newPassword = md5(self.formInfo.newPass)
           $.put(api + 'user', self.passwordInfo).then(function (response) {
-            if (response.status === 200) {
+            if (response.data.code === 200) {
               self.tip.type = 1
               self.tip.message = "修改成功！"
               setTimeout(() => {

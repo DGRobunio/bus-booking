@@ -1,7 +1,7 @@
 <template>
   <div class="purchase">
     <Navigator :user="user" />
-    <div v-if="bus" class="purchase-page">
+    <div v-if="bus !== null" class="purchase-page">
       <div class="purchase-info">
         <div class="container">
           <table class="table table-bordered table-hover">
@@ -82,20 +82,38 @@
     },
     data () {
       return {
+        bus: {
+          busID: null,
+          license: null,
+          totalSeats: null,
+          emptySeats: null,
+          departure: null,
+          destination: null,
+          beginAt: null,
+          endAt: null,
+          price: null,
+          info: null,
+          weekly: null,
+          status: null
+        },
         tip: {
           status: null,
           message: null
+        },
+        postData: {
+          busID: this.$route.params.busID
         }
       }
     },
     methods: {
       confirmOnClick () {
         const self = this
-        $.post(api + 'order', self.$route.params.busID).then(function (response) {
+        $.post(api + 'order', self.postData).then(function (response) {
           if(response.status === 200) {
             self.tip.status = 'success'
             self.tip.message = '购票成功！正在转跳至订单列表...'
             setTimeout(() => {
+              self.$emit('update')
               self.$router.push('/orders')
             }, 2000)
           } else if(response.status === 400) {
@@ -117,9 +135,7 @@
     beforeMount () {
       const self = this
       $.get(api + 'bus/' + self.$route.params.busID).then(function (response) {
-        if(response.status === 200) {
-          self.bus = response.data.bus
-        }
+        self.bus = response.data.bus
       })
     }
   }

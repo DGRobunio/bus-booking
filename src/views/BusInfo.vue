@@ -29,7 +29,7 @@
           <button v-else @click="favoriteChange" class="btn btn-secondary"> 取消收藏</button>
           <hr/>
           <h5>乘客评价</h5>
-          <div class="alert alert-light" v-if="Object.keys(comment).length === 0 || comment.oneComment.commentID === null">暂无评价。</div>
+          <div class="alert alert-light" v-if="!commentFlag">暂无评价。</div>
           <div v-else>
             <div class="card" v-for="oneComment in comment" :key="oneComment.commentID">
               <div class="card-header">
@@ -72,6 +72,7 @@
       return {
         busID: this.$route.params.busID,
         favor: false,
+        commentFlag: false,
         bus: {
           busID: null,
           license: null,
@@ -95,6 +96,9 @@
             isReplied: null,
             contentReplied: null
           }
+        },
+        postData: {
+          busID: this.$route.params.busID
         }
       }
     },
@@ -102,15 +106,15 @@
       favoriteChange () {
         const self = this
         if (self.favor) {
-          $.delete(api + 'favorite', self.busID).then(function (response) {
-            if (response.status == 200)
+          $.delete(api + 'favorite?busID=' + self.busID).then(function (response) {
+            if (response.data.code === 200)
             {
               self.favor = false
             }
           })
         } else {
-          $.post(api + 'favorite', self.busID).then(function (response) {
-            if (response.status == 200)
+          $.post(api + 'favorite', self.postData).then(function (response) {
+            if (response.data.code === 200)
             {
               self.favor = true
             }
@@ -128,6 +132,7 @@
       $.get(api + 'comment/' + self.busID).then(function (response) {
         if (response.status === 200) {
           self.comment = response.data.comment
+          self.commentFlag = true
         }
       })
       $.get(api + 'favorite').then(function (response) {

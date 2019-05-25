@@ -4,7 +4,7 @@
     <div class="container">
       <div class="row">
         <div v-if="!display.qrCodeFlag" class="col">
-          <div v-if="Object.keys(order).length === 0 || order.oneOrder.orderID === null" class="alert alert-warning col-sm-12">获取信息失败，请稍后再试。</div>
+          <div v-if="Object.keys(order).length === 0 " class="alert alert-warning col-sm-12">获取信息失败，请稍后再试。</div>
           <div v-else class="accordion" id="order-list">
             <div class="card">
               <div class="card-header" id="unused">
@@ -30,7 +30,7 @@
                 <div class="card-body">
                   <div class="list-group">
                     <div v-for="oneOrder in order" :key="oneOrder.orderID" >
-                      <div v-if="oneOrder.status === 0" class="list-group-item list-group-item-action">
+                      <div v-if="oneOrder.status === 1" class="list-group-item list-group-item-action">
                         <p>
                           订单编号:{{oneOrder.orderID}} 订票时间:{{oneOrder.orderAt}} 班车牌号:{{oneOrder.bus.license}} 出发时间:{{oneOrder.bus.beginAt}}
                         </p>

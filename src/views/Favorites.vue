@@ -4,7 +4,7 @@
     <div class="container">
       <div class="row">
         <div class="col">
-          <div class="alert alert-light" v-if="Object.keys(bus).length === 0 || bus.oneBus.busID === null">暂无收藏</div>
+          <div class="alert alert-light" v-if="Object.keys(bus).length === 0">暂无收藏</div>
           <div v-else>
             <table class="table">
               <thead>
@@ -91,8 +91,9 @@
       },
       deleteFavorite(busID) {
         const self = this
-        $.delete(api + 'favorite', busID).then(function (response) {
-          if (response.status == 200)
+        console.log(busID)
+        $.delete(api + 'favorite?busID=' + busID).then(function (response) {
+          if (response.status === 200)
           {
             self.favor = false
           }
