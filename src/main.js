@@ -13,8 +13,8 @@ import 'bootstrap/dist/css/bootstrap.css'
 
 global.jquery = jquery
 global.$ = axios
-// global.api = 'https://yapi.airstone.me/mock/11' + '/api/'
-global.api = 'http://localhost:8080/'
+global.api = 'https://yapi.airstone.me/mock/11' + '/api/'
+// global.api = 'http://localhost:8080/'
 global.md5 = md5
 global.QRCode = QRCode
 

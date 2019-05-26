@@ -29,6 +29,7 @@ export default {
   },
   methods: {
     update () {
+      console.log("update")
       const self = this
       $.get(api).then(function (response) {
         if(response.status === 200) {

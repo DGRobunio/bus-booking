@@ -33,10 +33,10 @@
             <button @click="billingOnClick" class="btn btn-primary">充值余额</button>
           </div>
           <div class="mb-4">
-            <ChangePassword v-if="changePasswordFlag === true" :user="user" />
+            <ChangePassword @reload="reload" v-if="changePasswordFlag === true" :user="user" />
           </div>
           <div class="mb-4">
-            <Billing v-if="billingFlag === true" :user="user" />
+            <Billing @reload="reload" v-if="billingFlag === true" :user="user" />
           </div>
         </div>
       </div>
@@ -92,6 +92,16 @@
           self.changePasswordFlag = true
           self.billingFlag = false
         }
+      },
+      reload () {
+        console.log("reload")
+        const self = this
+        self.$emit('update')
+        $.get(api + 'user').then(function (response) {
+          self.userInfo = response.data.user
+        })
+        self.billingFlag = false
+        self.changePasswordFlag = false
       }
     },
     beforeMount () {

@@ -48,9 +48,10 @@
               self.tip.message = '充值成功！两秒内刷新页面'
               setTimeout(() => {
                 self.key = null
-                self.$emit('update')
+                self.tip.status = null
+                self.tip.message = null
                 self.$emit('reload')
-              })
+              }, 2000)
             } else {
               self.tip.status ='fail'
               self.tip.message ='充值失败！请确认充值码是否有误！'
