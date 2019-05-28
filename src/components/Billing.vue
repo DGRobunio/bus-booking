@@ -43,7 +43,7 @@
         self.putData.key = self.key
         $.put(api + 'billing', self.putData).then(function (response) {
           if (response.status === 200) {
-            if (response.data.user.balance > self.user.balance) {
+            if (response.data.balance > self.user.balance) {
               self.tip.status = 'success'
               self.tip.message = '充值成功！两秒内刷新页面'
               setTimeout(() => {
@@ -52,14 +52,17 @@
                 self.tip.message = null
                 self.$emit('reload')
               }, 2000)
-            } else {
-              self.tip.status ='fail'
-              self.tip.message ='充值失败！请确认充值码是否有误！'
             }
-          } else {
-            self.tip.status = 'warn'
-            self.tip.message ='服务器繁忙！请稍后再试！'
           }
+        }).catch(function (error) {
+          console.log(error)
+          self.tip.status ='fail'
+          self.tip.message ='充值失败！请确认充值码是否有误！'
+          setTimeout(() => {
+            self.key = null
+            self.tip.status = null
+            self.tip.message = null
+          }, 2000)
         })
       }
     }

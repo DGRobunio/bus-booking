@@ -60,16 +60,26 @@
                 self.formInfo.newPass = null
                 self.formInfo.repeatPass = null
                 self.tip.type = null
-                self.$emit('reload')
+                self.$emit('relogin')
               }, 1000)
-            } else {
-              self.tip.type = 0
-              self.tip.message = "网络繁忙，请稍后再试！"
             }
+          }).catch(function (error) {
+            console.log(error)
+            self.tip.type = 0
+            self.tip.message = "网络繁忙，请稍后再试！"
+            setTimeout(() => {
+              self.formInfo.oldPass = null
+              self.formInfo.newPass = null
+              self.formInfo.repeatPass = null
+              self.tip.type = null
+              self.tip.message = null
+            }, 1000)
           })
         } else {
           self.tip.type = 0
           self.tip.message = "两次输入不一致！"
+          self.formInfo.newPass = null
+          self.formInfo.repeatPass = null
         }
       }
     }

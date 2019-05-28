@@ -22,9 +22,10 @@ export default {
     $.get(api).then(function (response) {
       if(response.status === 200) {
         self.user = response.data.user
-      } else {
-        self.user.userID = ''
       }
+    }).catch(function (error) {
+      console.log(error)
+      self.user.userID = ''
     })
   },
   methods: {
@@ -34,9 +35,10 @@ export default {
       $.get(api).then(function (response) {
         if(response.status === 200) {
           self.user = response.data.user
-        } else {
-          self.user.userID = ''
         }
+      }).catch(function (error) {
+        console.log(error)
+        self.user.userID = ''
       })
     }
   }

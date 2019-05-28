@@ -25,7 +25,8 @@
           </dl>
           <hr/>
           <router-link v-if="user.userID === ''" :to="'/login'" class="btn btn-primary">立即订票</router-link>
-          <router-link v-else :to="'/purchase/' + busID" :user="user" class="btn btn-primary">立即订票</router-link>
+          <router-link v-else-if="user.userID !== '' && bus.status === 1" :to="'/purchase/' + busID" :user="user" class="btn btn-primary">立即订票</router-link>
+          <button v-else class="btn btn-primary disabled" aria-disabled="true">立即订票</button>
           <button v-if="!favor && user.userID !==''" @click="favoriteChange" class="btn btn-primary"> 收藏</button>
           <button v-else-if="favor && user.userID !==''" @click="favoriteChange" class="btn btn-secondary"> 取消收藏</button>
           <hr/>
@@ -113,14 +114,14 @@
         const self = this
         if (self.favor) {
           $.delete(api + 'favorite?busID=' + self.busID).then(function (response) {
-            if (response.data.code === 200)
+            if (response.status === 200)
             {
               self.favor = false
             }
           })
         } else {
           $.post(api + 'favorite', self.postData).then(function (response) {
-            if (response.data.code === 200)
+            if (response.status === 200)
             {
               self.favor = true
             }
@@ -138,7 +139,9 @@
       $.get(api + 'comment/' + self.busID).then(function (response) {
         if (response.status === 200) {
           self.comment = response.data.comment
-          self.commentFlag = true
+          if (Object.keys(self.comment).length !== 0) {
+            self.commentFlag = true
+          }
         }
       })
       $.get(api + 'favorite').then(function (response) {

@@ -50,7 +50,7 @@ export default {
     reload () {
       const self = this
       $.get(api + 'bus').then(function (response) {
-        if (response.data.code === 200) {
+        if (response.status === 200) {
           self.bus = response.data.bus
         }
       })
@@ -60,7 +60,7 @@ export default {
     const self = this
     self.$emit('update')
     $.get(api + 'bus').then(function (response) {
-      if (response.data.code === 200) {
+      if (response.status === 200) {
         self.bus = response.data.bus
       }
     })

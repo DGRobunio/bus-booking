@@ -5,8 +5,8 @@
       <form @submit.prevent="submit" class="login-form">
         <img class="mb-4" src="../assets/logo.png" alt="" width="72" height="72">
         <h1 class="h3 mb-3 font-weight-normal">请登录</h1>
-        <label for="user_name" class="sr-only">账号(手机号)</label>
-        <input v-model="login.account" type="text" id="user_name" class="form-control" placeholder="账号(手机号)" required autofocus>
+        <label for="user_name" class="sr-only">账号(用户名)</label>
+        <input v-model="login.account" type="text" id="user_name" class="form-control" placeholder="账号(用户名)" required autofocus>
         <label for="user_password" class="sr-only">密码</label>
         <input v-model="login.password" type="password" id="user_password" class="form-control" placeholder="密码" required>
         <div v-if="tip.status === 'success'" class="alert alert-success">{{tip.message}}</div>
@@ -59,16 +59,17 @@
             setTimeout(() => {
               self.$router.push('/')
             }, 2000)
-          } else {
-            self.tip.status = 'fail'
-            self.tip.message = '登录失败！用户名或密码错误！'
-            self.login.account = null
-            self.login.password = null
-            setTimeout(() => {
-              self.tip.status = null
-              self.tip.message = null
-            }, 2000)
           }
+        }).catch(function (error) {
+          console.log(error)
+          self.tip.status = 'fail'
+          self.tip.message = '登录失败！用户名或密码错误！'
+          self.login.account = null
+          self.login.password = null
+          setTimeout(() => {
+            self.tip.status = null
+            self.tip.message = null
+          }, 2000)
         })
       }
     }

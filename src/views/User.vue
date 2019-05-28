@@ -18,7 +18,7 @@
               <td>{{userInfo.userID}}</td>
             </tr>
             <tr>
-              <th>手机号</th>
+              <th>用户名</th>
               <td>{{userInfo.account}}</td>
             </tr>
             <tr>
@@ -33,7 +33,7 @@
             <button @click="billingOnClick" class="btn btn-primary">充值余额</button>
           </div>
           <div class="mb-4">
-            <ChangePassword @reload="reload" v-if="changePasswordFlag === true" :user="user" />
+            <ChangePassword @relogin="relogin" v-if="changePasswordFlag === true" :user="user" />
           </div>
           <div class="mb-4">
             <Billing @reload="reload" v-if="billingFlag === true" :user="user" />
@@ -102,6 +102,18 @@
         })
         self.billingFlag = false
         self.changePasswordFlag = false
+      },
+      relogin () {
+        const self = this
+        $.get(api + 'logout').then(function (response) {
+          console.log(response.data.code)
+          if (response.status === 200) {
+            self.$emit('update')
+            self.$router.push('/login')
+          } else {
+            self.$router.push('/')
+          }
+        })
       }
     },
     beforeMount () {

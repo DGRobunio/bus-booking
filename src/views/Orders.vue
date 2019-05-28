@@ -48,9 +48,14 @@
         <div v-else class="col">
           <div class="row justify-content-sm-center">
             <div class="col-sm-12 alert alert-light text-center">请出示二维码以检票：</div>
-            <div class="col-sm-3"></div>
-            <div class="col-sm-5 center-div" id="qrcode" ref="qrcode"/>
-            <div class="col-sm-4"></div>
+          </div>
+          <div class="row justify-content-sm-center">
+            <div class="m-auto">
+              <div id="qrcode" ref="qrcode"/>
+            </div>
+          </div>
+          <div class="row justify-content-sm-center">
+            <div class="col-sm-12 alert alert-light text-center">或者使用以下订单号：{{display.id}}</div>
             <button @click="returnOrders" class="col-sm-4 btn btn-primary">返回</button>
           </div>
         </div>

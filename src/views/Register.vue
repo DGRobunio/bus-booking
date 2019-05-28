@@ -6,7 +6,7 @@
         <img class="mb-4" src="../assets/logo.png" alt="" width="72" height="72">
         <h1 class="h3 mb-3 font-weight-normal">注册信息</h1>
         <label for="account" class="sr-only">用户名</label>
-        <input v-model="register.account" type="text" id="account" class="form-control" placeholder="手机号" required autofocus>
+        <input v-model="register.account" type="text" id="account" class="form-control" placeholder="用户名" required autofocus>
         <label for="password" class="sr-only">密码</label>
         <input v-model="register.password" type="password" id="password" class="form-control" placeholder="密码" required>
         <label for="confirmPassword" class="sr-only">Confirm password</label>
@@ -87,8 +87,8 @@
                 self.tip.message = '两秒内跳转...'
               }, 1000)
               setTimeout(() => {
-                self.$router.push('/')
-              }, 2000)
+                self.$router.push('/login')
+              }, 1000)
             } else {
               self.tip.status = 'fail'
               self.tip.message = '注册失败！'

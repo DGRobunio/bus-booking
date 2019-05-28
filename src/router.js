@@ -32,6 +32,26 @@ export default new Router({
       component: () => import('./views/User')
     },
     {
+      path: '/adminupdatebus/:busID',
+      name: 'AdminUpdateBus',
+      component: () => import('./views/AdminUpdateBus')
+    },
+    {
+      path: '/adminaddbus',
+      name: 'AdminAddBus',
+      component: () => import('./views/AdminUpdateBus')
+    },
+    {
+      path: '/updateorders',
+      name: 'UpdateOrders',
+      component: () => import('./views/UpdateOrders')
+    },
+    {
+      path: '/codeslist',
+      name: 'CodesList',
+      component: () => import('./views/CodesList')
+    },
+    {
       path: '/orders',
       name: 'Orders',
       component: () => import('./views/Orders')

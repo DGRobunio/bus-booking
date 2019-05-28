@@ -43,14 +43,13 @@
           </table>
           <div class="mb-4">
             <router-link :to="'/bus/' + this.$route.params.busID" :user="user" class="btn btn-secondary">取消</router-link>
-            <button v-if="user.balance - bus.price < 0" class="btn btn-primary disabled" aria-disabled="true">确定</button>
-            <div v-if="user.balance - bus.price < 0"  class="alert alert-danger">"余额不足，请充值！"</div>
+            <button v-if="user.balance - bus.price < 0 || bus.status !== 1" class="btn btn-primary disabled" aria-disabled="true">确定</button>
             <button v-else v-on:click="confirmOnClick" class="btn btn-primary">确定</button>
+            <div v-if="user.balance - bus.price < 0"  class="alert alert-danger">"余额不足，请充值！"</div>
           </div>
           <div class="mb-4">
             <div v-if="tip.status === 'success'" class="alert alert-success">{{tip.message}}</div>
             <div v-if="tip.status === 'fail'" class="alert alert-danger">{{tip.message}}</div>
-            <div v-if="tip.status === 'warning'" class="alert alert-success">{{tip.message}}</div>
           </div>
         </div>
       </div>
@@ -116,19 +115,14 @@
               self.$emit('update')
               self.$router.push('/orders')
             }, 2000)
-          } else if(response.status === 400) {
-            self.tip.status = 'warning'
-            self.tip.message = '所选车辆已无空位，购票失败！'
-            setTimeout(() => {
-              self.$router.push('/')
-            }, 1000)
-          } else {
-            self.tip.status = 'fail'
-            self.tip.message = '发生未知错误，请稍后再试!'
-            setTimeout(() => {
-              self.$router.push('/bus/' + self.bus.busID)
-            }, 1000)
           }
+        }).catch(function (error) {
+          console.log(error)
+          self.tip.status = 'fail'
+          self.tip.message = '购票失败！'
+          setTimeout(() => {
+            self.$router.push('/')
+          }, 1000)
         })
       }
     },

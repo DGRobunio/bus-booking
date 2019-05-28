@@ -18,9 +18,12 @@
           <li class="nav-item dropdown">
             <a class="nav-link text-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Welcome, {{user.account}}! </a>
             <div class="dropdown-menu" aria-labelledby="dropdown">
-              <router-link to="/user" class="dropdown-item">余额：{{user.balance}}元</router-link>
-              <router-link to="/orders" class="dropdown-item">我的订单</router-link>
-              <router-link to="/favorites" :user="user" class="dropdown-item">收藏夹</router-link>
+              <router-link v-if="!user.isAdmin" to="/user" class="dropdown-item">余额：{{user.balance}}元</router-link>
+              <router-link v-if="!user.isAdmin" to="/orders" class="dropdown-item">我的订单</router-link>
+              <router-link v-if="!user.isAdmin" to="/favorites" :user="user" class="dropdown-item">收藏夹</router-link>
+              <router-link v-if="user.isAdmin" to='/adminaddbus' :user="user" class="dropdown-item">添加线路</router-link>
+              <router-link v-if="user.isAdmin" to='/codeslist' :user="user" class="dropdown-item">查看充值码列表</router-link>
+              <router-link v-if="user.isAdmin" to='/updateorders' :user="user" class="dropdown-item">手动更新订单</router-link>
             </div>
           </li>
           <li class="nav-item">
