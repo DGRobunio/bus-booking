@@ -14,16 +14,20 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.8.2",
     "ajv": "^6.10.0",
     "ajv-keywords": "^3.4.0",
     "axios": "^0.18.0",
     "bootstrap": "^4.3.1",
     "jquery": "^3.4.1",
     "js-md5": "^0.7.3",
+    "moment": "^2.24.0",
+    "pc-bootstrap4-datetimepicker": "^4.17.50",
     "popper.js": "^1.15.0",
     "qrcodejs2": "0.0.2",
     "qs": "^6.7.0",
     "vue": "^2.5.2",
+    "vue-bootstrap-datetimepicker": "^5.0.1",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {

@@ -58,7 +58,7 @@ import Foot from '../components/Foot'
           oneCode: {
             codeID: null,
             status :null,
-            codecode: null,
+            codeCode: null,
             userID: null,
             userAT: null
           }

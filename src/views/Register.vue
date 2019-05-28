@@ -6,7 +6,7 @@
         <img class="mb-4" src="../assets/logo.png" alt="" width="72" height="72">
         <h1 class="h3 mb-3 font-weight-normal">注册信息</h1>
         <label for="account" class="sr-only">用户名</label>
-        <input v-model="register.account" type="text" id="account" class="form-control" placeholder="用户名" required autofocus>
+        <input v-model="register.account" type="text" id="account" class="form-control" placeholder="用户名(仅大小写字母、数字与下划线)" onkeyup="this.value=this.value.replace(/[^\w_]/g,'');" required autofocus>
         <label for="password" class="sr-only">密码</label>
         <input v-model="register.password" type="password" id="password" class="form-control" placeholder="密码" required>
         <label for="confirmPassword" class="sr-only">Confirm password</label>
@@ -145,10 +145,12 @@
 
   .register-form input[type="text"] {
     margin-top: 40px;
+    ime-mode: disabled;
   }
 
   .register-form input[type="tel"] {
     margin-bottom: 40px;
+    ime-mode: disabled;
   }
 
   .register-form .alert {

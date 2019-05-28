@@ -32,8 +32,8 @@
                     <td v-else-if="oneBus.status === 1">运营中</td>
                     <td v-else-if="oneBus.status === -1">已废弃</td>
                     <td v-else>未知</td>
-                    <td v-if="oneBus.status === 1"><button class="btn btn-primary" :user="user" @click="moreInfo(oneBus.busID)">更多</button></td>
-                    <td v-else><button class="btn btn-primary disabled" aria-disabled="true">更多</button></td>
+                    <td><button class="btn btn-primary" :user="user" @click="moreInfo(oneBus.busID)">更多</button></td>
+<!--                    <td v-else><button class="btn btn-primary disabled" aria-disabled="true">更多</button></td>-->
                   </tr>
               </tbody>
             </table>

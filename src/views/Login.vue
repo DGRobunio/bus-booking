@@ -6,9 +6,9 @@
         <img class="mb-4" src="../assets/logo.png" alt="" width="72" height="72">
         <h1 class="h3 mb-3 font-weight-normal">请登录</h1>
         <label for="user_name" class="sr-only">账号(用户名)</label>
-        <input v-model="login.account" type="text" id="user_name" class="form-control" placeholder="账号(用户名)" required autofocus>
+        <input v-model="login.account" type="text" id="user_name" class="form-control" placeholder="用户名" onkeyup="this.value=this.value.replace(/[^\w_]/g,'');" required autofocus>
         <label for="user_password" class="sr-only">密码</label>
-        <input v-model="login.password" type="password" id="user_password" class="form-control" placeholder="密码" required>
+        <input v-model="login.password" type="password" id="user_password" class="form-control ime-disabled" placeholder="密码" required>
         <div v-if="tip.status === 'success'" class="alert alert-success">{{tip.message}}</div>
         <div v-if="tip.status === 'fail'" class="alert alert-danger">{{tip.message}}</div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
@@ -111,12 +111,14 @@
     margin-top: 40px;
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
+    ime-mode: disabled;
   }
 
   .login-form input[type="password"] {
     margin-bottom: 40px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+    ime-mode: disabled;
   }
 
   .login-form .alert {
@@ -124,4 +126,5 @@
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
   }
+
 </style>

@@ -30,7 +30,7 @@
           <button v-if="!favor && user.userID !==''" @click="favoriteChange" class="btn btn-primary"> 收藏</button>
           <button v-else-if="favor && user.userID !==''" @click="favoriteChange" class="btn btn-secondary"> 取消收藏</button>
           <hr/>
-          <h5>乘客评价</h5>
+          <h5>乘客评价(共{{Object.keys(comment).length}}条)</h5>
           <div class="alert alert-light" v-if="!commentFlag">暂无评价。</div>
           <div v-else>
             <div class="card" v-for="oneComment in comment" :key="oneComment.commentID">
