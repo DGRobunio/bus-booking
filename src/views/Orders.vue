@@ -30,13 +30,14 @@
                 <div class="card-body">
                   <div class="list-group">
                     <div v-for="oneOrder in order" :key="oneOrder.orderID" >
-                      <div v-if="oneOrder.status === 1" class="list-group-item list-group-item-action">
+                      <div v-if="oneOrder.status !== 0" class="list-group-item list-group-item-action">
                         <p>
                           订单编号:{{oneOrder.orderID}} 订票时间:{{oneOrder.orderAt}} 班车牌号:{{oneOrder.bus.license}} 出发时间:{{oneOrder.bus.beginAt}}
                         </p>
-                        <router-link :to="'/comment/' + oneOrder.orderID">
+                        <router-link v-if="oneOrder.status === 1" :to="'/comment/' + oneOrder.orderID">
                           前往评论
                         </router-link>
+                        <div v-if="oneOrder.status === 2" class="text-break">您已评论</div>
                       </div>
                     </div>
                   </div>
