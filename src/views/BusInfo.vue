@@ -17,7 +17,7 @@
             <dt class="col-sm-3">票务价格</dt>
             <dd class="col-sm-3">{{bus.price}} 元</dd>
             <dt class="col-sm-3">每周运营时间</dt>
-            <dd class="col-sm-3">{{bus.weekly}}</dd>
+            <dd class="col-sm-3">{{weeklyString}}</dd>
             <dt class="col-sm-2">剩余座位</dt>
             <dd class="col-sm-2">{{bus.emptySeats}} / {{bus.totalSeats}} </dd>
             <dt class="col-sm-3">信息介绍</dt>
@@ -81,6 +81,7 @@
         busID: this.$route.params.busID,
         favor: false,
         commentFlag: false,
+        weeklyString: null,
         bus: {
           busID: null,
           license: null,
@@ -128,6 +129,21 @@
             }
           })
         }
+      },
+      stringfyWeekly (weekly) {
+        const self = this
+        const week = ["周日","周一","周二","周三","周四","周五","周六"]
+        self.weeklyString = ''
+        var tmp = weekly
+        for (var i=0; i<7; i++) {
+          if(tmp >= 2**(6-i)) {
+            self.weeklyString += week[i]
+            tmp -= 2**(6-i)
+            if (tmp) {
+              self.weeklyString += ','
+            }
+          }
+        }
       }
     },
     beforeMount () {
@@ -135,6 +151,7 @@
       $.get(api + 'bus/' + self.busID).then(function (response) {
         if (response.status === 200) {
           self.bus = response.data.bus
+          self.stringfyWeekly(self.bus.weekly)
         }
       })
       $.get(api + 'comment/' + self.busID).then(function (response) {

@@ -186,7 +186,7 @@ import 'pc-bootstrap4-datetimepicker/build/css/bootstrap-datetimepicker.css'
                 self.tip.status = 1
                 self.tip.message = '修改成功!'
                 setTimeout(() => {
-                  self.$router.push('/')
+                  self.$router.push('/bus/' + self.bus.busID)
                 }, 1000)
               }
             }).catch(function (error) {
@@ -239,6 +239,13 @@ import 'pc-bootstrap4-datetimepicker/build/css/bootstrap-datetimepicker.css'
           $.get(api + 'bus/' + self.$route.params.busID).then(function (response) {
             if(response.status === 200) {
               self.bus = response.data.bus
+              var tmp = self.bus.weekly
+              for (var i = 0; i<7 ; i++) {
+                if (tmp >= 2**(6-i)) {
+                  tmp -= 2**(6-i)
+                  self.weeklyData[i] = 2**(6-i)
+                }
+              }
             }
           })
         } else {
