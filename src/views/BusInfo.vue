@@ -24,7 +24,7 @@
             <dd class="col-sm-5">{{bus.info}}</dd>
           </dl>
           <hr/>
-          <router-link v-if="user.userID === ''" :to="'/login'" class="btn btn-primary">立即订票</router-link>
+          <router-link v-if="user.userID === '' && bus.status === 1" :to="'/login'" class="btn btn-primary">立即订票</router-link>
           <router-link v-else-if="user.userID !== '' && bus.status === 1" :to="'/purchase/' + busID" :user="user" class="btn btn-primary">立即订票</router-link>
           <button v-else class="btn btn-primary disabled" aria-disabled="true">立即订票</button>
           <button v-if="!favor && user.userID !==''" @click="favoriteChange" class="btn btn-primary"> 收藏</button>
