@@ -29,6 +29,7 @@
           <button v-else class="btn btn-primary disabled" aria-disabled="true">立即订票</button>
           <button v-if="!favor && user.userID !==''" @click="favoriteChange" class="btn btn-primary"> 收藏</button>
           <button v-else-if="favor && user.userID !==''" @click="favoriteChange" class="btn btn-secondary"> 取消收藏</button>
+          <router-link v-if="user.isAdmin" :to="'/adminupdatebus/' + busID" :user="user" class="btn btn-warning">更新信息</router-link>
           <hr/>
           <h5>乘客评价(共{{Object.keys(comment).length}}条)</h5>
           <div class="alert alert-light" v-if="!commentFlag">暂无评价。</div>
@@ -44,7 +45,7 @@
               </div>
               <div class="card-body">
                 <p class="card-text">{{oneComment.content}}</p>
-                <div class="card" v-if="oneComment.isReplied == true" >
+                <div class="card" v-if="oneComment.isReplied" >
                   <p>管理员回复：{{oneComment.contentReplied}}</p>
                 </div>
               </div>

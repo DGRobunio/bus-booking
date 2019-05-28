@@ -173,11 +173,51 @@ import 'pc-bootstrap4-datetimepicker/build/css/bootstrap-datetimepicker.css'
         const self = this
         if(self.bus.weekly === 0) {
           self.tip.status = 0
-          self.tip.message = '登录失败！用户名或密码错误！'
+          self.tip.message = '请指定班车每周运营时间！'
           setTimeout(() => {
             self.tip.status = null
             self.tip.message = null
           }, 2000)
+        } else {
+          if(self.updateFlag) {
+            $.put(api + 'bus/' + self.bus.busID, self.bus).then(function (response) {
+              if (response.status === 200)
+              {
+                self.tip.status = 1
+                self.tip.message = '修改成功!'
+                setTimeout(() => {
+                  self.$router.push('/')
+                }, 1000)
+              }
+            }).catch(function (error) {
+              console.log(error)
+              self.tip.status = 0
+              self.tip.message = '修改失败！请稍后重试！'
+              setTimeout(() => {
+                self.tip.status = null
+                self.tip.message = null
+              }, 2000)
+            })
+          } else {
+            $.post(api + 'bus', self.bus).then(function (response) {
+              if (response.status === 200)
+              {
+                self.tip.status = 1
+                self.tip.message = '添加成功!'
+                setTimeout(() => {
+                  self.$router.push('/')
+                }, 1000)
+              }
+            }).catch(function (error) {
+              console.log(error)
+              self.tip.status = 0
+              self.tip.message = '添加失败！请稍后重试！'
+              setTimeout(() => {
+                self.tip.status = null
+                self.tip.message = null
+              }, 2000)
+            })
+          }
         }
       },
       weeklyDataUpdate() {
