@@ -66,7 +66,7 @@
           }).catch(function (error) {
             console.log(error)
             self.tip.type = 0
-            self.tip.message = "网络繁忙，请稍后再试！"
+            self.tip.message = "原密码不符，修改失败！"
             setTimeout(() => {
               self.formInfo.oldPass = null
               self.formInfo.newPass = null
