@@ -120,27 +120,20 @@
     },
     beforeMount () {
       const self = this
-      self.display.qrCodeFlag = false
-      $.get(api + 'order').then(function (response) {
-        if (response.status === 200) {
-          self.order = response.data.order
-        }
-      })
+      if(self.user.isAdmin) {
+        self.$router.push('/')
+      } else {
+        self.display.qrCodeFlag = false
+        $.get(api + 'order').then(function (response) {
+          if (response.status === 200) {
+            self.order = response.data.order
+          }
+        })
+      }
     }
   }
 </script>
 
 <style scoped>
-  .center-div {
-    height: 100%;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-align: center;
-    align-items: center;
-    text-align: center;
-    padding-top: 40px;
-    padding-bottom: 40px;
-    margin-left: auto;
-    margin-right: auto;
-  }
+
 </style>

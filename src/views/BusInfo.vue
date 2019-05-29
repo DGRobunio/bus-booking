@@ -24,11 +24,13 @@
             <dd class="col-sm-5">{{bus.info}}</dd>
           </dl>
           <hr/>
-          <router-link v-if="user.userID === '' && bus.status === 1" :to="'/login'" class="btn btn-primary">立即订票</router-link>
-          <router-link v-else-if="user.userID !== '' && bus.status === 1" :to="'/purchase/' + busID" :user="user" class="btn btn-primary">立即订票</router-link>
-          <button v-else class="btn btn-primary disabled" aria-disabled="true">立即订票</button>
-          <button v-if="!favor && user.userID !==''" @click="favoriteChange" class="btn btn-primary"> 收藏</button>
-          <button v-else-if="favor && user.userID !==''" @click="favoriteChange" class="btn btn-secondary"> 取消收藏</button>
+          <div v-if="!user.isAdmin">
+            <router-link v-if="user.userID === '' && bus.status === 1" :to="'/login'" class="btn btn-primary">立即订票</router-link>
+            <router-link v-else-if="user.userID !== '' && bus.status === 1" :to="'/purchase/' + busID" :user="user" class="btn btn-primary">立即订票</router-link>
+            <button v-else class="btn btn-primary disabled" aria-disabled="true">立即订票</button>
+            <button v-if="!favor && user.userID !==''" @click="favoriteChange" class="btn btn-primary"> 收藏</button>
+            <button v-else-if="favor && user.userID !==''" @click="favoriteChange" class="btn btn-secondary"> 取消收藏</button>
+          </div>
           <router-link v-if="user.isAdmin" :to="'/adminupdatebus/' + busID" :user="user" class="btn btn-warning">更新信息</router-link>
           <hr/>
           <h5>乘客评价(共{{Object.keys(comment).length}}条 平均分: {{average}}星)</h5>
@@ -48,6 +50,10 @@
                 <div class="card" v-if="oneComment.isReplied" >
                   <p>管理员回复：{{oneComment.contentReplied}}</p>
                 </div>
+                <div v-else class="form-row">
+                  <button class="btn btn-warning" @click="changeID(oneComment.commentID)">管理员回复</button>
+                  <AdminReply @refresh="refresh" v-if="AdminCommentID === oneComment.commentID" :commentID="oneComment.commentID" />
+                </div>
               </div>
             </div>
           </div>
@@ -60,12 +66,14 @@
 
 <script>
   import Navigator from '../components/Navigator'
+  import AdminReply from '../components/AdminReply'
   import Foot from '../components/Foot'
 
   export default {
     name: 'BusInfo',
     components: {
       Navigator,
+      AdminReply,
       Foot
     },
     props: {
@@ -82,6 +90,7 @@
         favor: false,
         commentFlag: false,
         weeklyString: null,
+        AdminCommentID: null,
         average: null,
         bus: {
           busID: null,
@@ -145,6 +154,18 @@
             }
           }
         }
+      },
+      changeID (commentID) {
+        const self = this
+        if (self.AdminCommentID === commentID)
+        {
+          self.AdminCommentID = null
+        } else {
+          self.AdminCommentID = commentID
+        }
+      },
+      refresh () {
+        this.$router.push('/')
       }
     },
     beforeMount () {
@@ -164,9 +185,9 @@
         }
       })
       $.get(api + 'star/' + self.busID).then(function (response) {
-        if(response.status === 200) [
+        if(response.status === 200) {
           self.average = response.data.average
-        ]
+        }
       })
       $.get(api + 'favorite').then(function (response) {
         if (response.status === 200) {

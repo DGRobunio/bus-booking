@@ -106,11 +106,15 @@
     },
     beforeMount () {
       const self = this
-      $.get(api + 'favorite').then(function (response) {
-        if (response.status === 200) {
-          self.bus = response.data.bus
-        }
-      })
+      if(self.user.isAdmin) {
+        self.$router.push('/')
+      } else {
+        $.get(api + 'favorite').then(function (response) {
+          if (response.status === 200) {
+            self.bus = response.data.bus
+          }
+        })
+      }
     }
   }
 </script>

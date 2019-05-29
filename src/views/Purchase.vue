@@ -128,9 +128,13 @@
     },
     beforeMount () {
       const self = this
-      $.get(api + 'bus/' + self.$route.params.busID).then(function (response) {
-        self.bus = response.data.bus
-      })
+      if(self.user.isAdmin) {
+        self.$router.push('/')
+      } else {
+        $.get(api + 'bus/' + self.$route.params.busID).then(function (response) {
+          self.bus = response.data.bus
+        })
+      }
     }
   }
 </script>
