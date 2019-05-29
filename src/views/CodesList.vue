@@ -27,7 +27,6 @@
                       <button v-if="oneCode.status === -1" class="btn btn-primary" @click="updateCode(oneCode.codeID)">下发充值码</button>
                       <button v-else class="btn btn-primary disabled" aria-disabled="true">已下发</button>
                     </td>
-                    <!-- <button class="btn btn-lg btn-primary btn-block " type="updateCode">下发充值码</button> -->
                   </tr>
               </tbody>
             </table>

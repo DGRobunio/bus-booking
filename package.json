@@ -29,6 +29,7 @@
     "qs": "^6.7.0",
     "vue": "^2.5.2",
     "vue-bootstrap-datetimepicker": "^5.0.1",
+    "vue-qrcode-reader": "^2.0.1",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {

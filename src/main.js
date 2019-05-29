@@ -7,6 +7,7 @@ import jquery from 'jquery'
 import axios from 'axios'
 import md5 from 'js-md5'
 import QRCode from 'qrcodejs2'
+import VueQrcodeReader from 'vue-qrcode-reader'
 import 'bootstrap'
 import 'popper.js'
 import 'bootstrap/dist/css/bootstrap.css'
@@ -17,14 +18,13 @@ global.api = 'http://localhost:8080/'
 global.md5 = md5
 global.QRCode = QRCode
 
-console.log(md5 ('hlynbnb'))
-
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 axios.defaults.withCredentials=true
 
 
 Vue.config.productionTip = false
 
+Vue.use(VueQrcodeReader)
 /* eslint-disable no-new */
 new Vue({
   router,

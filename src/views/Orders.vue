@@ -111,8 +111,7 @@
         const self = this
         self.display.qrCodeFlag = true
         self.display.id = orderID
-        self.display.config.value = '{"orderID": '+ orderID + '}'
-        // self.qrcode(self.display.config.value)
+        self.display.config.value = orderID + '^' + Math.random()
         setTimeout(() => {
           new QRCode(this.$refs.qrcode, self.display.config.value)
         }, 100)
