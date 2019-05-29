@@ -51,7 +51,7 @@ export default {
       option: {
         title: {text: '班车运营订单占比'},
         tooltip: {
-          pointFormat: '总订单数：{point.y}'
+          pointFormat: '总订单数：{point.y}张'
         },
         plotOptions: {
           pie: {
