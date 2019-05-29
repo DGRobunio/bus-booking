@@ -177,6 +177,11 @@
                 }
               }
             })
+            $.get(api + 'star/' + self.busID).then(function (response) {
+              if(response.status === 200) {
+                self.average = response.data.average
+              }
+            })
           }
         })
       },
@@ -188,7 +193,8 @@
               self.commentFlag = true
             }
           }
-        })      }
+        })
+      }
     },
     beforeMount () {
       const self = this
