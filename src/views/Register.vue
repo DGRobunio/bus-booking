@@ -89,17 +89,18 @@
               setTimeout(() => {
                 self.$router.push('/login')
               }, 1000)
-            } else {
-              self.tip.status = 'fail'
-              self.tip.message = '注册失败！'
-              self.register.account = null
-              self.register.password = null
-              self.register.confirmPassword = null
-              setTimeout(() => {
-                self.tip.status = null
-                self.tip.message = null
-              }, 2000)
             }
+          }).catch(function (error) {
+            console.log(error)
+            self.tip.status = 'fail'
+            self.tip.message = '注册失败！'
+            self.register.account = null
+            self.register.password = null
+            self.register.confirmPassword = null
+            setTimeout(() => {
+              self.tip.status = null
+              self.tip.message = null
+            }, 2000)
           })
         }
       }
