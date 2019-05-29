@@ -17,7 +17,7 @@
               </thead>
               <tbody>
                   <tr v-for="oneCode in codes" :key="oneCode.codeID">
-                    <th scope="row">{{oneCode.codecode}}</th>
+                    <th scope="row">{{oneCode.codeCode}}</th>
                     <td>{{oneCode.userID}}</td>
                     <td v-if="oneCode.status === 0">未使用</td>
                     <td v-else-if="oneCode.status === 1">已使用</td>

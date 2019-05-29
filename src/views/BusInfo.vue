@@ -46,11 +46,12 @@
                 </div>
               </div>
               <div class="card-body">
+                <button v-if="user.isAdmin" @click="deleteComment(oneComment.commentID)" class="float-right btn btn-danger">删除评论</button>
                 <p class="card-text">{{oneComment.content}}</p>
                 <div class="card" v-if="oneComment.isReplied" >
                   <p>管理员回复：{{oneComment.contentReplied}}</p>
                 </div>
-                <div v-else class="form-row">
+                <div v-else-if="!oneComment.isReplied && user.isAdmin" class="form-row">
                   <button class="btn btn-warning" @click="changeID(oneComment.commentID)">管理员回复</button>
                   <AdminReply @refresh="refresh" v-if="AdminCommentID === oneComment.commentID" :commentID="oneComment.commentID" />
                 </div>
@@ -164,9 +165,30 @@
           self.AdminCommentID = commentID
         }
       },
+      deleteComment (commentID) {
+        const self = this
+        $.delete(api + 'comment?commentID=' + commentID).then(function (response) {
+          if (response.status === 200) {
+            $.get(api + 'comment/' + self.busID).then(function (response) {
+              if (response.status === 200) {
+                self.comment = response.data.comment
+                if (Object.keys(self.comment).length !== 0) {
+                  self.commentFlag = true
+                }
+              }
+            })
+          }
+        })
+      },
       refresh () {
-        this.$router.push('/')
-      }
+        $.get(api + 'comment/' + self.busID).then(function (response) {
+          if (response.status === 200) {
+            self.comment = response.data.comment
+            if (Object.keys(self.comment).length !== 0) {
+              self.commentFlag = true
+            }
+          }
+        })      }
     },
     beforeMount () {
       const self = this
