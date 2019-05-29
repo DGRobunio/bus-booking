@@ -49,9 +49,9 @@ export default {
       },
       showChart:false,
       option: {
-        title: {text: '班车运营收入占比'},
+        title: {text: '班车运营订单占比'},
         tooltip: {
-          pointFormat: '总收入：{point.y} 元'
+          pointFormat: '总订单数：{point.y}'
         },
         plotOptions: {
           pie: {
