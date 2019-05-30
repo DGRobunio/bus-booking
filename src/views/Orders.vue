@@ -106,6 +106,11 @@
       returnOrders () {
         const self = this
         self.display.qrCodeFlag = false
+        $.get(api + 'order').then(function (response) {
+          if (response.status === 200) {
+            self.order = response.data.order
+          }
+        })
       },
       generateQRCode (orderID) {
         const self = this
